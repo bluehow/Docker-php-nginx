@@ -26,8 +26,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/local/bin/composer \
-    && composer config -g repo.packagist composer https://mirrors.tencent.com/composer/
+    && mv composer.phar /usr/local/bin/composer
 
 # 配置Nginx
 COPY nginx/nginx.conf /etc/nginx/http.d/nginx.conf
