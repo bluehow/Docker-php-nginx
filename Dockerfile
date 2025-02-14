@@ -35,7 +35,7 @@ COPY nginx/nginx.conf /etc/nginx/http.d/nginx.conf
 # 配置php
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
 
-VOLUME /etc/nginx/http.d
+VOLUME /etc/nginx/http.d /var/www/html
 
 EXPOSE 80
 
