@@ -40,4 +40,4 @@ EXPOSE 80
 
 WORKDIR /var/www/html
 
-CMD ["/usr/local/bin/start.sh"]
+ENTRYPOINT ["sh","/usr/local/bin/start.sh"]
