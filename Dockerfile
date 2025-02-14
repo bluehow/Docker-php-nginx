@@ -29,10 +29,12 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && mv composer.phar /usr/local/bin/composer
 
 # 配置Nginx
-COPY nginx/nginx.conf /etc/nginx/http.d/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/http.d/default.conf
 
 # 配置php
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
+
+COPY start.sh /usr/local/bin/start.sh
 
 VOLUME /etc/nginx/http.d /var/www/html
 
