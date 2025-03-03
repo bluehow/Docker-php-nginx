@@ -4,7 +4,7 @@ ENV TZ="Asia/Shanghai"
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
     apk update \
     && apk add --no-cache $PHPIZE_DEPS \
-    && apk add --no-cache libstdc++ libzip-dev vim nginx libpng git \
+    && apk add --no-cache libstdc++ libzip-dev vim nginx libpng git supervisor \
     freetype \
     libpng \
     libjpeg-turbo \
@@ -26,20 +26,18 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/local/bin/composer
+    && mv composer.phar /usr/local/bin/composer \
+    && mkdir /var/log/supervisor
+
+COPY ./supervisor/supervisord.conf /etc/supervisord.conf
 
 # 配置Nginx
 COPY nginx/nginx.conf /etc/nginx/http.d/default.conf
-
 # 配置php
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
-
-COPY start.sh /usr/local/bin/start.sh
-
-VOLUME /etc/nginx/http.d /var/www/html
 
 EXPOSE 80
 
 WORKDIR /var/www/html
 
-ENTRYPOINT ["sh","/usr/local/bin/start.sh"]
+ENTRYPOINT ["supervisor","-c","/etc/supervisord.conf"]
