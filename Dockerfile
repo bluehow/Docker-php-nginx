@@ -40,4 +40,4 @@ EXPOSE 80
 
 WORKDIR /var/www/html
 
-ENTRYPOINT ["supervisor","-c","/etc/supervisord.conf"]
+ENTRYPOINT ["supervisord","-c","/etc/supervisord.conf"]
